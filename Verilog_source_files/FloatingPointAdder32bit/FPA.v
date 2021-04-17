@@ -1,7 +1,7 @@
-`include "swap.v"
-`include "cla.v"
-`include "shifters.v"
-`include "split.v"
+`include "./Verilog_source_files/FloatingPointAdder32bit/swap.v"
+`include "./Verilog_source_files/FloatingPointAdder32bit/cla.v"
+`include "./Verilog_source_files/FloatingPointAdder32bit/shifters.v"
+`include "./Verilog_source_files/FloatingPointAdder32bit/split.v"
 
 module FPA(input [31:0]I1,input [31:0]I2,output [31:0]out);
     wire [31:0]A,B;
@@ -67,7 +67,7 @@ module FPA(input [31:0]I1,input [31:0]I2,output [31:0]out);
         // Case for infinity
         if(&E1 == 1'b1 && |M1 == 1'b0)
             out = {S1,{8{1'b1}},23'b0};
-        else if(&E1==1'b0 && &E2==1'b0)
+        else if(|E1==1'b0 && |E2==1'b0)
             out = {S1,{8'b0},Sum[22:0]};
         //Handles normal + NaN 
         else 

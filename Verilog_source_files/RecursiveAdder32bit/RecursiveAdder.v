@@ -1,9 +1,9 @@
-`include "ParallelPrefixCircuit.v"
+`include "./Verilog_source_files/RecursiveAdder32bit/ParallelPrefixCircuit.v"
 
 module RecursiveAdder(sum, a, b);
 
 input [31:0] a, b;
-output [32:0] sum;
+output [31:0] sum;
 wire [65:0] inputsignal;
 wire [32:0] carry;
 wire [65:0] outsig;
@@ -78,6 +78,6 @@ xor xor28(sum[28], a[28], b[28], carry[28]);
 xor xor29(sum[29], a[29], b[29], carry[29]);
 xor xor30(sum[30], a[30], b[30], carry[30]);
 xor xor31(sum[31], a[31], b[31], carry[31]);
-assign sum[32] = carry[32];
+// assign sum[32] = carry[32];
 
 endmodule

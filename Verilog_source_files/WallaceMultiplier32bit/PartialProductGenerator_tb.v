@@ -1,4 +1,4 @@
-`include "PartialProductGenerator.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/PartialProductGenerator.v"
 
 module PartialProductGenerator_tb();
 

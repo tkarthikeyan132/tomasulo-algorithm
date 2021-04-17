@@ -1,4 +1,4 @@
-`include "ParallelPrefixCircuit.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/ParallelPrefixCircuit.v"
 
 module RecursiveAdderWM(carryout, sum, a, b, carryin);
 

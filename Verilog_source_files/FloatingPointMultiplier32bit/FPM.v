@@ -1,8 +1,8 @@
-`include "Mul.v"
-`include "swap.v"
-`include "shifters.v"
-`include "split.v"
-`include "triArr.v"
+`include "./Verilog_source_files/FloatingPointMultiplier32bit/Mul.v"
+`include "./Verilog_source_files/FloatingPointMultiplier32bit/swap.v"
+`include "./Verilog_source_files/FloatingPointMultiplier32bit/shifters.v"
+`include "./Verilog_source_files/FloatingPointMultiplier32bit/split.v"
+`include "./Verilog_source_files/FloatingPointMultiplier32bit/triArr.v"
 
 
 module FPM(input [31:0] I1, input [31:0] I2, output [31:0] out);

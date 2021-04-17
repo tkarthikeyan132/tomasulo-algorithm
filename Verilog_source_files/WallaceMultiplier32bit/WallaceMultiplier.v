@@ -1,43 +1,45 @@
-`include "fullAdderGate.v"
-`include "PartialProductGenerator.v"
-`include "RecursiveAdderWM.v"
-`include "CSA1.v"
-`include "CSA2.v"
-`include "CSA3.v"
-`include "CSA4.v"
-`include "CSA5.v"
-`include "CSA6.v"
-`include "CSA7.v"
-`include "CSA8.v"
-`include "CSA9.v"
-`include "CSA10.v"
-`include "CSA11.v"
-`include "CSA12.v"
-`include "CSA13.v"
-`include "CSA14.v"
-`include "CSA15.v"
-`include "CSA16.v"
-`include "CSA17.v"
-`include "CSA18.v"
-`include "CSA19.v"
-`include "CSA20.v"
-`include "CSA21.v"
-`include "CSA22.v"
-`include "CSA23.v"
-`include "CSA24.v"
-`include "CSA25.v"
-`include "CSA26.v"
-`include "CSA27.v"
-`include "CSA28.v"
-`include "CSA29.v"
-`include "CSA30.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/fullAdderGate.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/PartialProductGenerator.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/RecursiveAdderWM.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA1.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA2.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA3.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA4.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA5.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA6.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA7.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA8.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA9.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA10.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA11.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA12.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA13.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA14.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA15.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA16.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA17.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA18.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA19.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA20.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA21.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA22.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA23.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA24.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA25.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA26.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA27.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA28.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA29.v"
+`include "./Verilog_source_files/WallaceMultiplier32bit/CSA30.v"
 
-module WallaceMultiplier (finalres, res1, res2, a, b);
+module WallaceMultiplier (res, a, b);
 
 input [31:0] a, b;
-output [63:0] res1;
-output [63:0] res2;
-output [63:0] finalres;
+output [31:0] res;
+
+wire [63:0] res1;
+wire [63:0] res2;
+wire [63:0] finalres;
 wire [1:0] intermediate;
 wire [1:0] carout;
 
@@ -331,5 +333,7 @@ assign res2[63:0] = i2[63:0];
 
 RecursiveAdderWM RAWM1(intermediate, finalres[31:0], res1[31:0], res2[31:0], 2'b00);
 RecursiveAdderWM RAWM2(carout, finalres[63:32], res1[63:32], res2[63:32], intermediate);
+
+assign res = finalres[31:0];
 
 endmodule
