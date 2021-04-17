@@ -1,24 +1,27 @@
 
-def fp_exec_input(a, b, cin, fpname):
-    input_file = open(filename, "r")
-    input_data = input_file.readlines()
-    input_data[8] = "fpa F_0 (a, b, sum);\n"
-    if(fpname == 'fpm'):
-        input_data[8] = "fpm F_0 (a, b, sum);\n"
-    input_data[12] = "	a = 1'b" + str(a) + ";\n"
-    input_data[13] = "	b = 1'b" + str(b) + ";\n"
-    input_data[14] = "//" + input_data[14]
-    input_file = open(filename, "w")
-    input_file.writelines(input_data)
+# returns the file content based upon the opname
+def get_modified_content(a, b, opname):
+    content = list()
+    if(opname == 'ADD'):
+        content = ['`include "Verilog_source_files/RecursiveAdder32bit/RecursiveAdder.v"\n', 'RecursiveAdder A(out, a, b);\n']
+    elif(opname == 'FADD'):
+        content = ['`include "Verilog_source_files/FloatingPointAdder32bit/FPA.v"\n', 'FPA A(a, b, out);\n']
+    elif(opname == 'MUL'):
+        content = ['`include "Verilog_source_files/WallaceMultiplier32bit/WallaceMultiplier.v"\n', 'WallaceMultiplier M(out, a, b);\n']
+    elif(opname == 'FMUL'):
+        content = ['`include "Verilog_source_files/FloatingPointMultiplier32bit/FPM.v"\n', 'FPM M(a, b, out);\n']
+    content.append("\ta = 32'b"+ str(a) + ";\n")
+    content.append("\tb = 32'b"+ str(b) + ";\n")
+    return content
 
-def exec_input(a, b, cin, opname):
+# prepares the 'testbench' for execution
+def prepare_file(filename, a, b, opname):
+    mod_content = get_modified_content(a, b, opname=opname)
     input_file = open(filename, "r")
     input_data = input_file.readlines()
-    # input_data[8] = "fpa F_0 (a, b, sum);\n"
-    # if(fpname == 'fpm'):
-    #     input_data[8] = "fpm F_0 (a, b, sum);\n"
-    # input_data[12] = "	a = 1'b" + str(a) + ";\n"
-    # input_data[13] = "	b = 1'b" + str(b) + ";\n"
-    # input_data[14] = "//" + input_data[14]
+    input_data[0] = mod_content[0]      # headerfile inclusion
+    input_data[14] = mod_content[1]     # call the right exec unit
+    input_data[18] = mod_content[2]     # change value of a
+    input_data[19] = mod_content[3]     # change value of b
     input_file = open(filename, "w")
     input_file.writelines(input_data)
