@@ -1,5 +1,19 @@
 
 
+#************************Binary-Decimal Intercoversion**************************#
+
+
+def binary_to_decimal(bin_num):
+    return int(bin_num, 2)
+
+
+def decimal_to_binary(num):
+    return bin(num).replace("0b", "").zfill(32)
+
+#*******************************************************************************#
+
+
+
 #******************************Decimal to FP************************************#
 
 # returns binary representation of a fraction(0 < x < 1)
@@ -33,10 +47,6 @@ def decimal_to_fp(real_no):
 #*******************************************************************************#
 
 
-
-
-
-
 #*******************************FP to Decimal***********************************#
 
 # helper function to convert mantissa to int
@@ -63,7 +73,9 @@ def fp_to_decimal(ieee_32):
 
 # Driver Code
 # if __name__ == "__main__":
-#     print(decimal_to_fp(-34343.45552))
-#     print(decimal_to_fp(98.34))
-#     print(fp_to_decimal('01000100011101101100011110101110'))
+#     print(binary_to_decimal('11010101001010000111101010101'))
+#     print(decimal_to_binary(0))
+    # print(decimal_to_fp(-34343.45552))
+    # print(decimal_to_fp(98.34))
+    # print(fp_to_decimal('01000100011101101100011110101110'))
     
