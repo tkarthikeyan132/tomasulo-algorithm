@@ -66,7 +66,7 @@ def fp_to_decimal(ieee_32):
 	mantissa_str = ieee_32[9 : ]
 	mantissa_int = convertToInt(mantissa_str)
 	real_no = pow(-1, sign_bit) * mantissa_int * pow(2, exponent_unbias)
-	return real_no
+	return int(real_no)
 
 #*******************************************************************************#
 

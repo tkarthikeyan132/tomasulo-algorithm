@@ -2,12 +2,31 @@
 import os
 import preparator
 
+from formatters import (
+    binary_to_decimal,
+    fp_to_decimal,
+    decimal_to_binary,
+    decimal_to_fp
+)
+
+
+
 # returns the output after execution
 def execute(a, b, opname):
     filename = 'testbench.v'
+    if(opname == "ADD" or opname == "MUL"):
+        a = decimal_to_binary(a)
+        b = decimal_to_binary(b)
+    elif(opname == "FADD" or opname == "FMUL"):
+        a = decimal_to_fp(a)
+        b = decimal_to_fp(b)
     preparator.prepare_file(filename, a, b, opname=opname)
     stream = os.popen('iverilog ' + filename + ' && ./a.out')
     output = stream.readline().rstrip()
+    if(opname == "ADD" or opname == "MUL"):
+        output = binary_to_decimal(output)
+    elif (opname == "FADD" or opname == "FMUL"):
+        output = fp_to_decimal(output)
     return output
 
 

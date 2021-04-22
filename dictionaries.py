@@ -16,3 +16,24 @@ cycles_required = {
     "LD" :  1,
     "ST" : 1
 }
+
+
+num_to_opcode = [
+    "Invalid",
+    "FADD",
+    "FADD",
+    "FADD",
+    "FMUL",
+    "FMUL",
+    "ADD",
+    "ADD",
+    "ADD",
+    "MUL",
+    "MUL",
+    "LD",
+    "LD",
+    "LD",
+    "ST",
+    "ST",
+    "ST"
+]
