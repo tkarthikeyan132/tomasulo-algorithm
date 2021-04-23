@@ -49,10 +49,12 @@ def handle_FLR_update():
 
 
 def handle_load_store(bank, opname):
+    print(bank.source1, "line 51")
     if(opname == "LD"):
-        Registers.list[bank.source1] = Memory.read_memory(bank.source2)
+        print("mfd", bank.source1, bank.source2)
+        Registers.list[bank.source1].data = Memory.read_memory(Registers.list[bank.source2].data)
     elif(opname == "ST"):
-        Memory.write_memory(bank.source1, Registers.list[bank.source2])
+        Memory.write_memory(bank.source1, bank.source2)
 
 
 def handle_execution():
@@ -76,14 +78,20 @@ def source_setter(bank, src1, src2):
         bank.source1 = None
     else:
         bank.tag1 = 0
-        bank.source1 = register1.data
-
+        if(bank.num >= 11):
+            bank.source1 = register1.num
+        else:
+            bank.source1 = register1.data
     if(register2.busy):
         bank.tag2 = register2.tag
         bank.source2 = None
     else:
         bank.tag2 = 0
-        bank.source2 = register2.data
+        if(bank.num >= 11):
+            bank.source2 = register2.num
+        else:
+            bank.source2 = register2.data
+
         
 
 # sets the destination register in the FLR
@@ -153,6 +161,11 @@ def main():
     Registers.list[8].data = '5'
     Registers.list[10].data = '3'
 
+    Memory.write_memory(11, 110) # M[11] == '11'
+    Memory.write_memory(12, 22)
+    Memory.write_memory(13, 33)
+    Memory.write_memory(14, 44)
+
     #**********************************************************************************#
 
     instruction_file = open("Instructions.txt", "r")
@@ -161,7 +174,7 @@ def main():
     instructions.reverse()
     # print(instructions[3][3][1:])
     while(True):
-        for _ in range(4):
+        for _ in range(3):
             if(len(instructions) != 0):
                 instruction = instructions.pop()
                 opname = instruction[0]
@@ -186,6 +199,8 @@ def main():
             break
     print("Final******************")
     Registers.print_registers()
+    Memory.print_memory(15)
+    print(f"Time elapsed: {time}")
 
 if __name__=="__main__":
     main()
@@ -196,4 +211,6 @@ if __name__=="__main__":
     FADD R8 R6 R2         R8 = 11
     FMUL R10 R0 R6        R10 = 126
     ADD R6 R8 R2          R6 = 13
+    LD R3 R1              R3 = 110
+    ST R6 R10             M[13] = 126
 '''

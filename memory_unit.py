@@ -3,16 +3,18 @@ class MainMemory:
     def __init__(self):
         self.list = ["0"] * 1024
     
-    def print_memory(self):
-        print(self.list)
+    def print_memory(self, range_n):
+        print(f"************Memory {range_n} from start************")
+        for i in range(range_n):
+            print(f"Memory[{i}] = {self.list[i]}")
     
     # address and value are integers
     def write_memory(self, address, value):
-        self.list[address] = str(value)
+        self.list[int(address)] = str(value)
 
     # address is integer
     def read_memory(self, address):
-        return self.list[address]
+        return self.list[int(address)]
     
 
 # A single Register
