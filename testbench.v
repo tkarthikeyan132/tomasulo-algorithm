@@ -1,4 +1,4 @@
-`include "Verilog_source_files/FloatingPointAdder32bit/FPA.v"
+`include "Verilog_source_files/FloatingPointMultiplier32bit/FPM.v"
 
 
 
@@ -12,12 +12,12 @@ reg[31:0] a, b;  // they should hold one bit value input, thus 'reg' (input shol
 wire[31:0] out;     // output should be 'wire'
 //
 
-FPA A(a, b, out);
+FPM M(a, b, out);
 
 initial   // initializing values
 begin
-	a = 32'b01000100100110100000101011111010;
-	b = 32'b01000111101110110110011000010001;
+	a = 32'b01000001011000000000000000000000;
+	b = 32'b01000001000100000000000000000000;
 end
 
 initial

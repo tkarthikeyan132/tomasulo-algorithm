@@ -15,8 +15,8 @@ from formatters import (
 def execute(a, b, opname):
     filename = 'testbench.v'
     if(opname == "ADD" or opname == "MUL"):
-        a = decimal_to_binary(a)
-        b = decimal_to_binary(b)
+        a = decimal_to_binary(int(a))
+        b = decimal_to_binary(int(b))
     elif(opname == "FADD" or opname == "FMUL"):
         a = decimal_to_fp(a)
         b = decimal_to_fp(b)
@@ -27,6 +27,7 @@ def execute(a, b, opname):
         output = binary_to_decimal(output)
     elif (opname == "FADD" or opname == "FMUL"):
         output = fp_to_decimal(output)
+    print(f"Executed {opname} {a} {b} = {output}")
     return output
 
 

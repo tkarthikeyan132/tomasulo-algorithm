@@ -11,6 +11,7 @@ class ReservationBank:
         self.finish_time = -1      
         self.is_occupied = False
         self.result = 0           # answer of computation
+        self.is_executing = False
     
 
 # A set of Reservation banks
@@ -26,4 +27,4 @@ class ReservationBanks:
 
     def print_banks(self):
         for i in self.list:
-            print(i.num, i.instruction_no, i.is_occupied, i.tag1, i.source1, i.tag2, i.lt)
+            print(i.num, i.instruction_no, i.is_occupied, i.tag1, i.source1, i.tag2, i.source2, i.is_executing, i.finish_time, i.result)

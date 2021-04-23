@@ -30,19 +30,20 @@ def binaryOfFraction(fraction):
 	return binary
 
 # returns FP representation of real_no
-def decimal_to_fp(real_no):
-    sign_bit = 0
-    if(real_no < 0):
-        sign_bit = 1
-    real_no = abs(real_no)
-    int_str = bin(int(real_no))[2 : ]
-    fraction_str = binaryOfFraction(real_no - int(real_no))
-    ind = int_str.index('1')
-    exp_str = bin((len(int_str) - ind - 1) + 127)[2 : ]
-    mant_str = int_str[ind + 1 : ] + fraction_str
-    mant_str = mant_str + ('0' * (23 - len(mant_str)))
-    ieee_rep = (str(sign_bit) + exp_str + mant_str)[0:32]
-    return ieee_rep
+def decimal_to_fp(decimal_num):
+	real_no = float(decimal_num)
+	sign_bit = 0
+	if(real_no < 0):
+		sign_bit = 1
+	real_no = abs(real_no)
+	int_str = bin(int(real_no))[2 : ]
+	fraction_str = binaryOfFraction(real_no - int(real_no))
+	ind = int_str.index('1')
+	exp_str = bin((len(int_str) - ind - 1) + 127)[2 : ]
+	mant_str = int_str[ind + 1 : ] + fraction_str
+	mant_str = mant_str + ('0' * (23 - len(mant_str)))
+	ieee_rep = (str(sign_bit) + exp_str + mant_str)[0:32]
+	return ieee_rep
 
 #*******************************************************************************#
 

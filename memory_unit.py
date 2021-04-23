@@ -30,8 +30,10 @@ class Registers:
         self.list = [Register(i) for i in range(16)]
 
     def print_registers(self):
+        print("***************Registers**********************")
         for i in self.list:
             print(i.num, i.data, i.busy, i.tag)
+        print("**********************************************")
 
     def write_register(self, idx, value):
         self.list[idx] = str(value)
