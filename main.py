@@ -168,9 +168,13 @@ def pending_execution():
     return var
 
 def print_report():
-    print("**************Report ****************")
-    for i in InstructionData:
-        print(i)
+    print("+------------------------------------------------------------------------------------------------------+")
+    print("+------------------------------------------------Report------------------------------------------------+")
+    print("+______________________________________________________________________________________________________+")
+    print(InstructionData[0][0]+"     |     "+InstructionData[0][1]+"     |     "+InstructionData[0][2]+"     |     "+InstructionData[0][3]+"     |     "+InstructionData[0][4])
+    for i in range(len(InstructionData)):
+        if i > 0:
+            print(InstructionData[i])
 
 
 def main():
@@ -275,7 +279,9 @@ def main():
             break
     Memory.print_memory(256)
     print_report()
-    print(f"Time elapsed: {time}")
+    print("********************************")
+    print(f"********TIME ELAPSED: {time}********")
+    print("********************************")
 
 if __name__=="__main__":
     main()
