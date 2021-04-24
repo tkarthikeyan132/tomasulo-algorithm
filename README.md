@@ -23,7 +23,9 @@ ___
 * S2 stands for the source2 register Rn
 
 * Sample File format
+
 ![Alt](sample_file.png)
+
     * ***Note**: There should not be any empty line in the file.*
 
 ___
