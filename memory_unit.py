@@ -21,7 +21,7 @@ class MainMemory:
 class Register:
     def __init__(self, num):
         self.num = num
-        self.data = "0" * 32
+        self.data = "0"
         self.busy = False
         self.tag = 0
     

@@ -37,7 +37,7 @@ def flush_FLR_entry(bank):
             register.data = bank.result
             register.busy = False
             register.tag = 0
-            print(f"{bank.result} is stored in R{register.num}")
+            # print(f"{bank.result} is stored in R{register.num}")
     handle_tag_updates(bank)
 
 def handle_FLR_update():
@@ -56,18 +56,18 @@ def handle_FLR_update():
             #changes ALERT
             n_bank = getattr(ReservationBanks, num_to_opcode[bank.num] + '_available') 
             setattr(ReservationBanks, num_to_opcode[bank.num] + '_available', n_bank + 1) #INCREMENT
-            print(f"bank {bank.num} freed.")
+            # print(f"bank {bank.num} freed.")
     
 
 
 def handle_load_store(bank, opname):
-    print(bank.source1, "line 51")
-    print("ld_st",opname, bank.source1, bank.source2, bank.num)
+    # print(bank.source1, "line 51")
+    # print("ld_st",opname, bank.source1, bank.source2, bank.num)
     if(opname == "LD"):
         # print("ld", bank.source1, bank.source2)
         Registers.list[bank.source1].data = Memory.read_memory(Registers.list[bank.source2].data)
     elif(opname == "ST"):
-        print("st", bank.source1, bank.source2, bank.num)
+        # print("st", bank.source1, bank.source2, bank.num)
         #changes ALERT
         Memory.write_memory(Registers.list[int(bank.source1)].data, Registers.list[int(bank.source2)].data)
 
@@ -94,7 +94,7 @@ def source_setter(bank, src1, src2):
     else:
         bank.tag1 = 0
         if(bank.num >= 11):
-            print(f'{num_to_opcode[bank.num]} : bank.sr1 = {bank.source1} register.num = {register1.num}')
+            # print(f'{num_to_opcode[bank.num]} : bank.sr1 = {bank.source1} register.num = {register1.num}')
             bank.source1 = register1.num
         else:
             bank.source1 = register1.data
@@ -104,7 +104,7 @@ def source_setter(bank, src1, src2):
     else:
         bank.tag2 = 0
         if(bank.num >= 11):
-            print(f'{num_to_opcode[bank.num]} : bank.src2 = {bank.source2} register.num = {register1.num}')
+            # print(f'{num_to_opcode[bank.num]} : bank.src2 = {bank.source2} register.num = {register1.num}')
             bank.source2 = register2.num
         else:
             bank.source2 = register2.data
@@ -120,7 +120,7 @@ def destination_setter(bank, destination):
         else:   # the register in FLR is free
             dest_register.busy = True
             dest_register.tag = bank.num
-        print(f"Bank {bank.num} tagged by R{dest_register.num}")
+        # print(f"Bank {bank.num} tagged by R{dest_register.num}")
 
 
 
@@ -156,7 +156,7 @@ def fill_reservation_bank(reservation_bank, instruction, opname, n_bank):
 def get_available_bank(opname):
     for i in reservation_banks_range[opname]:
         if(not(ReservationBanks.list[i].is_occupied)):
-            print(f'{opname} requested and {ReservationBanks.list[i].num} alloted')
+            # print(f'{opname} requested and {ReservationBanks.list[i].num} alloted')
             return ReservationBanks.list[i] 
 
 def pending_execution():
@@ -175,40 +175,40 @@ def main():
 
     # global time, program_counter, Memory, Registers, ReservationBanks 
     #Instructions.txt
-    # Registers.list[0].data = '8'
-    # Registers.list[1].data = '11'
-    # Registers.list[2].data = '2'
-    # Registers.list[4].data = '7'
-    # Registers.list[6].data = '9'
-    # Registers.list[8].data = '5'
-    # Registers.list[10].data = '3'
-
-    # Memory.write_memory(11, 110) 
-    # Memory.write_memory(12, 22)
-    # Memory.write_memory(13, 33)
-    # Memory.write_memory(14, 44)
-
-    #Instructions2.txt
-    Registers.list[0].data = '1'
+    Registers.list[0].data = '8'
     Registers.list[1].data = '11'
-    Registers.list[2].data = '22'
-    Registers.list[3].data = '37'
-    Registers.list[4].data = '29'
-    Registers.list[5].data = '25'
-    Registers.list[6].data = '33'
-    Registers.list[10].data = '107'
+    Registers.list[2].data = '2'
+    Registers.list[4].data = '7'
+    Registers.list[6].data = '9'
+    Registers.list[8].data = '5'
+    Registers.list[10].data = '3'
 
     Memory.write_memory(11, 110) 
-    Memory.write_memory(12, 122)
-    Memory.write_memory(13, 303)
-    Memory.write_memory(14, 414)
-    Memory.write_memory(15, 514)
-    Memory.write_memory(242, 56)
-    Memory.write_memory(66, 107)
+    Memory.write_memory(12, 22)
+    Memory.write_memory(13, 33)
+    Memory.write_memory(14, 44)
+
+    #Instructions2.txt
+    # Registers.list[0].data = '1'
+    # Registers.list[1].data = '11'
+    # Registers.list[2].data = '22'
+    # Registers.list[3].data = '37'
+    # Registers.list[4].data = '29'
+    # Registers.list[5].data = '25'
+    # Registers.list[6].data = '33'
+    # Registers.list[10].data = '107'
+
+    # Memory.write_memory(11, 110) 
+    # Memory.write_memory(12, 122)
+    # Memory.write_memory(13, 303)
+    # Memory.write_memory(14, 414)
+    # Memory.write_memory(15, 514)
+    # Memory.write_memory(242, 56)
+    # Memory.write_memory(66, 107)
 
     #**********************************************************************************#
 
-    instruction_file = open("Instructions2.txt", "r")
+    instruction_file = open("Instructions.txt", "r")
     instructions_list = instruction_file.readlines()
     instructions = [line.rstrip().split(' ') for line in instructions_list]
     instructions.reverse()
@@ -217,26 +217,26 @@ def main():
         for _ in range(3):
             if(len(instructions) != 0):
                 instruction = instructions.pop()
-                print(f'instruction being popped {instruction}')
+                # print(f'instruction being popped {instruction}')
                 opname = instruction[0]
                 number_of_available_banks = getattr(ReservationBanks, opname + '_available') 
                 if(number_of_available_banks > 0):
                     current_bank = get_available_bank(opname)
-                    print(f"Reservation Bank {current_bank.num} is made occupied.")
+                    # print(f"Reservation Bank {current_bank.num} is made occupied.")
                     current_bank.instruction_no = program_counter
                     destination = fill_reservation_bank(current_bank, instruction, opname, number_of_available_banks)
                     destination_setter(current_bank, destination)
                     program_counter += 1
                 else:
                     instructions.append(instruction)
-                    print(f'instruction being pushed {instruction}')
+                    # print(f'instruction being pushed {instruction}')
                     break
         handle_execution()
-        print(f"PC = {program_counter}; t = {time}")
+        # print(f"PC = {program_counter}; t = {time}")
         handle_FLR_update()
         time += 1
         # Registers.print_registers()
-        ReservationBanks.print_banks()
+        # ReservationBanks.print_banks()
         if(not(pending_execution()) and len(instructions)==0):
             break
     print("Final******************")
