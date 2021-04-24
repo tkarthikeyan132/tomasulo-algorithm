@@ -65,7 +65,7 @@ def handle_load_store(bank, opname):
     # print("ld_st",opname, bank.source1, bank.source2, bank.num)
     if(opname == "LD"):
         # print("ld", bank.source1, bank.source2)
-        Registers.list[bank.source1].data = Memory.read_memory(Registers.list[bank.source2].data)
+        Registers.list[int(bank.source1)].data = Memory.read_memory(Registers.list[int(bank.source2)].data)
     elif(opname == "ST"):
         # print("st", bank.source1, bank.source2, bank.num)
         #changes ALERT
@@ -82,6 +82,8 @@ def handle_execution():
             else:
                 bank.result = execute(bank.source1, bank.source2, opname)
             bank.finish_time = time + cycles_required[opname]
+            InstructionData[bank.instruction_no][3] = time          # Exec Start
+            InstructionData[bank.instruction_no][4] = bank.finish_time   # Exec Start
 
 
 # sets the source1, source2 based upon status of FLR
@@ -165,8 +167,14 @@ def pending_execution():
         var |= bank.is_occupied
     return var
 
+def print_report():
+    print("**************Report ****************")
+    for i in InstructionData:
+        print(i)
+
+
 def main():
-    global time, program_counter, Memory, Registers, ReservationBanks
+    global time, program_counter, Memory, Registers, ReservationBanks, InstructionData
     time = 0
     program_counter = 1
     Memory = memory_unit.MainMemory()
@@ -175,48 +183,68 @@ def main():
 
     # global time, program_counter, Memory, Registers, ReservationBanks 
     #Instructions.txt
-    Registers.list[0].data = '8'
-    Registers.list[1].data = '11'
-    Registers.list[2].data = '2'
-    Registers.list[4].data = '7'
-    Registers.list[6].data = '9'
-    Registers.list[8].data = '5'
-    Registers.list[10].data = '3'
-
-    Memory.write_memory(11, 110) 
-    Memory.write_memory(12, 22)
-    Memory.write_memory(13, 33)
-    Memory.write_memory(14, 44)
-
-    #Instructions2.txt
-    # Registers.list[0].data = '1'
+    # Registers.list[0].data = '8'
     # Registers.list[1].data = '11'
-    # Registers.list[2].data = '22'
-    # Registers.list[3].data = '37'
-    # Registers.list[4].data = '29'
-    # Registers.list[5].data = '25'
-    # Registers.list[6].data = '33'
-    # Registers.list[10].data = '107'
+    # Registers.list[2].data = '2'
+    # Registers.list[4].data = '7'
+    # Registers.list[6].data = '9'
+    # Registers.list[8].data = '5'
+    # Registers.list[10].data = '3'
 
     # Memory.write_memory(11, 110) 
-    # Memory.write_memory(12, 122)
-    # Memory.write_memory(13, 303)
-    # Memory.write_memory(14, 414)
-    # Memory.write_memory(15, 514)
-    # Memory.write_memory(242, 56)
-    # Memory.write_memory(66, 107)
+    # Memory.write_memory(12, 22)
+    # Memory.write_memory(13, 33)
+    # Memory.write_memory(14, 44)
 
+    #Instructions2.txt
+    Registers.list[0].data = '1'
+    Registers.list[1].data = '11'
+    Registers.list[2].data = '22'
+    Registers.list[3].data = '37'
+    Registers.list[4].data = '29'
+    Registers.list[5].data = '25'
+    Registers.list[6].data = '33'
+    Registers.list[10].data = '107'
+
+    Memory.write_memory(11, 110) 
+    Memory.write_memory(12, 122)
+    Memory.write_memory(13, 303)
+    Memory.write_memory(14, 414)
+    Memory.write_memory(15, 514)
+    Memory.write_memory(242, 56)
+    Memory.write_memory(66, 107)
+
+    #Instructions3.txt
+    # Registers.list[0].data = '10'
+    # Registers.list[1].data = '11'
+    # Registers.list[2].data = '12'
+    # Registers.list[4].data = '14'
+    # Registers.list[6].data = '16'
+    # Registers.list[8].data = '18'
+    # Registers.list[10].data = '20'
+
+    # Memory.write_memory(11, 50) 
+    # Memory.write_memory(12, 52)
+    # Memory.write_memory(13, 53)
+    # Memory.write_memory(14, 54)
+    # Memory.write_memory(110, 550)
     #**********************************************************************************#
 
-    instruction_file = open("Instructions.txt", "r")
+    instruction_file = open("Instructions2.txt", "r")
     instructions_list = instruction_file.readlines()
     instructions = [line.rstrip().split(' ') for line in instructions_list]
     instructions.reverse()
+    InstructionData = [[0 for x in range(5)] for y in range(len(instructions)+1)] 
+    InstructionData[0] = ['Instruction No', 'Instruction', 'Arr Time', 'Exec Start', 'Exec End']
+    # print(InstructionData)
     # print(instructions[3][3][1:])
     while(True):
         for _ in range(3):
             if(len(instructions) != 0):
                 instruction = instructions.pop()
+                InstructionData[program_counter][0] = program_counter # inst num
+                InstructionData[program_counter][1] = ' '.join(instruction) # inst
+                InstructionData[program_counter][2] = time     # Arr time
                 # print(f'instruction being popped {instruction}')
                 opname = instruction[0]
                 number_of_available_banks = getattr(ReservationBanks, opname + '_available') 
@@ -232,16 +260,21 @@ def main():
                     # print(f'instruction being pushed {instruction}')
                     break
         handle_execution()
-        # print(f"PC = {program_counter}; t = {time}")
+        print("_______________________________________________________________________________________________________")
+        print(f"Register File(FLR) and Reservation Banks' Status @PC = {program_counter}; t = {time}")
+        print("*******************************************************************************************************")
         handle_FLR_update()
         time += 1
+        print("R_Num, R_tag, R_busy, R_data "+"|  |#$$#|  |"+"Bank_num, Bank_instruction, Tag1, Src1, Tag2, Src2")
+        for i in range(16):
+            print(Registers.list[i].print_reg()+"|  |#$$#|  |"+ReservationBanks.list[i+1].print_bank())
+        print("*******************************************************************************************************")
         # Registers.print_registers()
         # ReservationBanks.print_banks()
         if(not(pending_execution()) and len(instructions)==0):
             break
-    print("Final******************")
-    Registers.print_registers()
-    Memory.print_memory(250)
+    Memory.print_memory(256)
+    print_report()
     print(f"Time elapsed: {time}")
 
 if __name__=="__main__":
@@ -293,4 +326,28 @@ if __name__=="__main__":
     LD R8 R7                R8 = 56
     ADD R9 R3 R4            R9 = 66
     ST R9 R10               M[66] = 107
+'''
+
+                   
+# Instruction3
+    # Registers.list[0].data = '10'
+    # Registers.list[1].data = '11'
+    # Registers.list[2].data = '12'
+    # Registers.list[4].data = '14'
+    # Registers.list[6].data = '16'
+    # Registers.list[8].data = '18'
+    # Registers.list[10].data = '20'
+
+    # Memory.write_memory(11, 50) 
+    # Memory.write_memory(12, 52)
+    # Memory.write_memory(13, 53)
+    # Memory.write_memory(14, 54)
+    # Memory.write_memory(110, 550)
+'''
+    ADD R11 R10 R10         R11 = 40
+    MUL R12 R0 R1           R12 = 110
+    FADD R14 R12 R8         R14 = 128
+    FMUL R15 R2 R4          R15 = 168
+    LD R13 R12              R13 = 550
+    ST R8 R12               M[18] = 110
 '''

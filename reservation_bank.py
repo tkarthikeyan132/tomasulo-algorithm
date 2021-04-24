@@ -13,7 +13,9 @@ class ReservationBank:
         self.is_occupied = False
         self.result = 0           # answer of computation
         self.is_executing = False
-    
+    def print_bank(self):
+        return (" "+str(self.num)+"  |  "+str(self.instruction_no)+"  |   "+str(self.tag1)+"  |  "+str(self.source1)+"  |  "+str(self.tag2)+"  |  "+str(self.source2))
+
 
 # A set of Reservation banks
 class ReservationBanks:
@@ -26,6 +28,6 @@ class ReservationBanks:
         self.ST_available = 3
         self.list = [ReservationBank(i) for i in range(17)]
 
-    def print_banks(self):
-        for i in self.list:
-            print(i.num, i.instruction_no, i.is_occupied, i.tag1, i.source1, i.tag2, i.source2, i.is_executing, i.finish_time, i.result)
+    # def print_banks(self):
+    #     for i in self.list:
+    #         i.print_bank()

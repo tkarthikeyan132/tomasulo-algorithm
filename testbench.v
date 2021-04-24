@@ -1,4 +1,4 @@
-`include "Verilog_source_files/FloatingPointMultiplier32bit/FPM.v"
+`include "Verilog_source_files/RecursiveAdder32bit/RecursiveAdder.v"
 
 
 
@@ -12,12 +12,12 @@ reg[31:0] a, b;  // they should hold one bit value input, thus 'reg' (input shol
 wire[31:0] out;     // output should be 'wire'
 //
 
-FPM M(a, b, out);
+RecursiveAdder A(out, a, b);
 
 initial   // initializing values
 begin
-	a = 32'b01000001011000000000000000000000;
-	b = 32'b01000001000100000000000000000000;
+	a = 32'b00000000000000000000000000100101;
+	b = 32'b00000000000000000000000000011101;
 end
 
 initial

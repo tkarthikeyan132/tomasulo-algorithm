@@ -27,7 +27,7 @@ def execute(a, b, opname):
         output = binary_to_decimal(output)
     elif (opname == "FADD" or opname == "FMUL"):
         output = fp_to_decimal(output)
-    print(f"Executed {opname} {a} {b} = {output}")
+    # print(f"Executed {opname} {a} {b} = {output}")
     return output
 
 

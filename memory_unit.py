@@ -1,13 +1,17 @@
+from formatters import decimal_to_binary
 # The main memory
 class MainMemory:
     def __init__(self):
         self.list = ["0"] * 1024
     
     def print_memory(self, range_n):
-        print(f"************Memory {range_n} from start************")
-        for i in range(range_n):
-            print(f"Memory[{i}] = {self.list[i]}")
-    
+        print("*******************************************************************************************************")
+        print(f"************************************Memory (display upto address {range_n})******************************")
+        print("*******************************************************************************************************")
+        i = 0
+        while (i < range_n):
+            print(f"Memory[{i}] = {decimal_to_binary(int(self.list[i]))} |$| Memory[{i+1}] = {decimal_to_binary(int(self.list[i+1]))}")
+            i += 2      
     # address and value are integers
     def write_memory(self, address, value):
         self.list[int(address)] = str(value)
@@ -24,7 +28,8 @@ class Register:
         self.data = "0"
         self.busy = False
         self.tag = 0
-    
+    def print_reg(self):
+        return (" "+str(self.num)+"  |  "+str(self.busy)+"  |  "+str(self.data)+"  |  "+str(self.tag)+" ")
 
 # A set of registers
 class Registers:
@@ -34,7 +39,8 @@ class Registers:
     def print_registers(self):
         print("***************Registers**********************")
         for i in self.list:
-            print(i.num, i.data, i.busy, i.tag)
+            i.print_reg()
+            # print(i.num, i.data, i.busy, i.tag)
         print("**********************************************")
 
     def write_register(self, idx, value):
