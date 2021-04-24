@@ -8,6 +8,7 @@ class ReservationBank:
         self.source1 = 0
         self.tag2 = -1
         self.source2 = 0
+        self.destination = 0
         self.finish_time = -1      
         self.is_occupied = False
         self.result = 0           # answer of computation

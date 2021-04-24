@@ -1,11 +1,11 @@
-
+#changes ALERT
 reservation_banks_range = {
-    "FADD": (1,4),
-    "FMUL": (4,6),
-    "ADD" : (6,9),
-    "MUL" : (9,11),
-    "LD" : (11,14),
-    "ST" : (14,17)
+    "FADD": (1,3),
+    "FMUL": (4,5),
+    "ADD" : (6,8),
+    "MUL" : (9,10),
+    "LD" : (11,13),
+    "ST" : (14,16)
 }
 
 cycles_required = {
