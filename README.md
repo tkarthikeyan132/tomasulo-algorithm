@@ -26,7 +26,7 @@ ___
 
 ![Alt](sample_file.png)
 
-    * ***Note**: There should not be any empty line in the file.*
+***Note**: There should not be any empty line in the file.*
 
 ___
 ### How to Execute
