@@ -10,7 +10,7 @@ from execution_unit import execute
 
 
 
-
+# operator forwarding
 def handle_tag_updates(bank):
     for item in ReservationBanks.list:
         if(item.tag1 == bank.num):
@@ -30,7 +30,7 @@ def handle_tag_updates(bank):
                 item.source2 = bank.result
 
 
-
+# operator forwarding
 def flush_FLR_entry(bank):
     for register in Registers.list:
         if(register.tag == bank.num and register.busy == True):

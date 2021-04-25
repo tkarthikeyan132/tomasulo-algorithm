@@ -29,7 +29,7 @@ class Register:
         self.busy = False
         self.tag = 0
     def print_reg(self):
-        return (" "+str(self.num)+"  |  "+str(self.busy)+"  |  "+str(self.data)+"  |  "+str(self.tag)+" ")
+        return ("|   "+str(self.num)+"  |  "+str(self.tag)+"  |  "+str(self.busy)+"  |  "+str(self.data)+" ")
 
 # A set of registers
 class Registers:
